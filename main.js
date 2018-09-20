@@ -52,6 +52,28 @@ class Blockchain{
         this.chain.push(newBlock);
 
     }
+
+    //TO VERIFY IF TE CHAIN IS VALID 
+    
+    isChainValid(){
+
+        //not putting index in 0 cause GENESIS is the 0
+        for(let i = 1; i <this.chain.length; i++){
+            const currentBlock = this.chain[i];
+            const previousBlock = this.chain[i -1];
+
+            //check if the propely block  are link together
+            //1.- if the hash of the block still valid  
+            if(currentBlock.hash != currentBlock.calculateHash()){
+                return false;  
+            }
+
+            if(currentBlock.previousHash != previousBlock.hash){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 
@@ -59,4 +81,12 @@ class Blockchain{
 
 let savjeeCoin = new Blockchain
 savjeeCoin.addBlock(new Block(1, "20/08/2018", {amount: 4}));
-savjeeCoin.addBlock(new Block(2, "20/08/2018", {amount: 7}));
+savjeeCoin.addBlock(new Block(2, "23/08/2018", {amount: 7}));
+
+console.log("Is block chain valid?" + savjeeCoin.isChainValid());
+
+
+//See how the blockchain looks like 
+// console.log(JSON.stringify(savjeeCoin, null, 4))
+
+
