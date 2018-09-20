@@ -36,6 +36,27 @@ class Blockchain{
 
     createGenesisBlock(){
 
-        return new Block(0, "20/09/2018", "Genesis block", 0);
+        return new Block(0, "18/08/2018", "Genesis block", 0);
+    }
+
+    getLatestBlock(){
+
+        return this.chain[this.chain.length - 1];
+
+    }
+
+    addBlock(newBlock){
+
+        newBlock.previousHash = this.getLatestBlock().hash;
+        newBlock.hash = newBlock.calculateHash();
+        this.chain.push(newBlock);
+
     }
 }
+
+
+//to test it we need to create a instance of the blockchain
+
+let savjeeCoin = new Blockchain
+savjeeCoin.addBlock(new Block(1, "20/08/2018", {amount: 4}));
+savjeeCoin.addBlock(new Block(2, "20/08/2018", {amount: 7}));
